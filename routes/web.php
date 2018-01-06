@@ -16,6 +16,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::get('/subscription/{email}/{unsubscribe_key}/unsubscribe', 'SubscriptionController@unsubscribe')->name('subscription.unsubscribe');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource ("subscription", "SubscriptionController");
