@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewSubscription;
+use App\Subscription;
 use Illuminate\Http\Request;
+use Mail;
 
 class SubscriptionController extends Controller
 {
@@ -13,7 +16,6 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -34,9 +36,17 @@ class SubscriptionController extends Controller
      */
     public function store(Request $request)
     {
-		$request->validate([
-			"email"=> "required|max:255| email"
-		]);
+    		$request->validate([
+    			"email"=> "required|max:255|email|unique:subscriptions,email"
+    		]);
+        $subscription = new Subscription;
+        $subscription->email = $request->email;
+        $subscription->unsubscribe_key = uniqid();
+        $subscription->save();
+        Mail::to("2buzezsn@gmail.com")->send(new NewSubscription);
+        return view ('Subscription.success');
+
+
     }
 
     /**

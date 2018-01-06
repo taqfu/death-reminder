@@ -27,19 +27,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     </head>
     <body><div id='middle-container'>
-            <form method="post" action="{{route('subscription.store')}}">
-                {{csrf_field()}}
-            <div class='row'>
-                  <div id='title' class='text-center'>What is life without death?</div>
-                  <div class='input-group'>
 
-                        <input class="form-control" type="text" placeholder="E-mail " name='email' />
+                  <div id='title' class='text-center'>Remember death</div>
+                  <div class='text-center'>
+                      But don't worry, we'll help you remember now. </br>(Technology is awesome like that.)
+                  </div>
 
-                        <span class='input-group-btn'>
-                            <button class='btn btn-secondary' type='button'>Live Now</button>
-                        </span>
-                    </div>
-            </div>
-          </form>
     </div></body>
 </html>
