@@ -102,13 +102,20 @@ class SubscriptionController extends Controller
     public function unsubscribe_link($email){
         $subscription = Subscription::where('email', $email)->whereNull('unsubscribed_at')->first();
         if ($subscription==null){
-            return "Sorry. No email currently subscribed.";
+            return view ('error', [
+                "error_message"=>"Sorry. No email currently subscribed."
+              ]);
         }
-      if ($subscription->unsubscribe_email_sent_at == null /* or if last sent more than 24 hours ago*/){
+      if ($subscription->unsubscribe_email_sent_at == null || strtotime($subscription->unsubscribe_email_sent_at) < strtotime('-1 day')){
             Mail::to($email)->send(new Unsubscribe($email, $subscription->unsubscribe_key));
+            $subscription->unsubscribe_email_sent_at = date("Y-m-d H:i:s");
+            $subscription->save();
             return view ('Subscription.unsubscribe');
 
-        }
+      }
+      return view ('error', [
+            "error_message"=>"Sorry. This email has already been sent in the past 24 hours. Please check your email for the previous one or try again later."
+          ]);
 
     }
 
@@ -117,7 +124,9 @@ class SubscriptionController extends Controller
           ->where('unsubscribe_key', $unsubscribe_key)
           ->whereNull('unsubscribed_at')->first();
         if ($subscription==null){
-            return "Sorry, we can't find your subscription.";
+            return view ('error', [
+                "error_message"=>"Sorry, we can't find your subscription."
+              ]);
         }
         $subscription->unsubscribed_at = date("Y-m-d H:i:s");
         $subscription->save();
