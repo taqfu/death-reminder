@@ -1,56 +1,6 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="manifest" href="/manifest.json">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Death Reminder - Remind yourself to live life to the fullest</title>
-        <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-
-        <style>
-            #title, .error-msg{
-              font-family: 'Oswald', sans-serif;
-
-            }
-            .error-msg{
-              font-size:22px;
-            }
-            #title {
-              font-size:72px;
-
-            }
-            #middle-container{
-              position: fixed;
-              top: 50%;
-              left: 50%;
-              /* bring your own prefixes */
-              transform: translate(-50%, -50%);
-            }
-        </style>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    </head>
-    <body><div id='middle-container'>
+@extends ('layouts.app')
+@section ('content')
+<div id='middle-container'>
       <div id='title' class='text-center'>What is life without death?</div>
 
             <form method="post" action="{{route('subscription.store')}}">
@@ -61,13 +11,21 @@
                         <input class="form-control" type="text" placeholder="E-mail " name='email' />
 
                         <span class='input-group-btn'>
-                            <button class='btn btn-secondary'>Avoid Later</button>
+                            <button class='btn btn-secondary'>Avoid Later <!-- Live Life --> </button>
+
                         </span>
                     </div>
             </div>
           </form>
           @foreach ($errors->all() as $error)
-              <div class='text-danger error-msg text-center'>{{$error}}</div>
+              <div class='text-danger error-msg text-center'>
+                  {{$error}}
+                  @if ($error == "The email has already been taken.")
+                      <a href="{{route('subscription.unsubscribe_link', ['email'=> old('email')] )}}">(Unsubscribe)</a>
+                  @endif
+
+              </div>
+
           @endforeach
-    </div></body>
-</html>
+    </div>
+@endsection

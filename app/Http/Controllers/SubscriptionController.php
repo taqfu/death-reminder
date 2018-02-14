@@ -97,6 +97,19 @@ class SubscriptionController extends Controller
     {
         //
     }
+
+    public function unsubscribe_link($email){
+        $subscription = Subscription::where('email', $email)->whereNull('unsubscribed_at')->first();
+        if ($subscription==null){
+            return "Sorry. No email currently subscribed.";
+        }
+        if ($subscription->unsubscribe_email_sent_at == null){
+            return view ('Subscription.unsubscribe');
+            
+        }
+
+    }
+
     public function unsubscribe($email, $unsubscribe_key){
         $subscription = Subscription :: where ('email', $email)
           ->where('unsubscribe_key', $unsubscribe_key)

@@ -1,0 +1,23 @@
+#title, #title-2, .error-msg{
+  font-family: 'Oswald', sans-serif;
+
+}
+.error-msg, .text{
+  font-size:22px;
+}
+#title {
+  font-size:72px;
+
+}
+#title-2{
+  font-size:54px;
+}
+
+
+#middle-container{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
