@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NewSubscription;
+use App\Mail\Unsubscribe;
 use App\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -47,7 +48,7 @@ class SubscriptionController extends Controller
         $subscription->email = $request->email;
         $subscription->unsubscribe_key = $unsubscribe_key;
         $subscription->save();
-        Mail::to("2buzezsn@gmail.com")->send(new NewSubscription($request->email, $unsubscribe_key));
+        Mail::to($request->email)->send(new NewSubscription($request->email, $unsubscribe_key));
         return view ('Subscription.success');
 
 
@@ -103,9 +104,10 @@ class SubscriptionController extends Controller
         if ($subscription==null){
             return "Sorry. No email currently subscribed.";
         }
-        if ($subscription->unsubscribe_email_sent_at == null){
+      if ($subscription->unsubscribe_email_sent_at == null /* or if last sent more than 24 hours ago*/){
+            Mail::to($email)->send(new Unsubscribe($email, $subscription->unsubscribe_key));
             return view ('Subscription.unsubscribe');
-            
+
         }
 
     }
@@ -119,6 +121,6 @@ class SubscriptionController extends Controller
         }
         $subscription->unsubscribed_at = date("Y-m-d H:i:s");
         $subscription->save();
-        return "You have now been unsubscribed. You'll live forever now!";
+        return view ("Subscription.unsubscribed");
     }
 }
