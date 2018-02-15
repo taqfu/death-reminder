@@ -16,6 +16,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/admin', function(){
+    return view('auth.login');
+});
 Route::get('/unsubscribe/{email}', 'SubscriptionController@unsubscribe_link')->name('subscription.unsubscribe_link');
 Route::get('/subscription/{email}/{unsubscribe_key}/unsubscribe', 'SubscriptionController@unsubscribe')->name('subscription.unsubscribe');
 Route::get('/home', 'HomeController@index')->name('home');
