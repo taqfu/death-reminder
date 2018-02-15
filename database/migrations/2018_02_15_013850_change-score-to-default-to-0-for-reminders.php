@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRemindersTable extends Migration
+class ChangeScoreToDefaultTo0ForReminders extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateRemindersTable extends Migration
      */
     public function up()
     {
-        Schema::create('reminders', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-			$table->UnsignedInteger('score');
-			$table->String('body');
-
+        Schema::table('reminders', function (Blueprint $table) {
+			$table->UnsignedInteger('score')->default(0)->change();
         });
     }
 
@@ -29,6 +25,8 @@ class CreateRemindersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reminders');
+        Schema::table('reminders', function (Blueprint $table) {
+            //
+        });
     }
 }

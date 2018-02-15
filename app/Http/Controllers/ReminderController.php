@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
+use App\Reminder;
 use Illuminate\Http\Request;
 
 class ReminderController extends Controller
@@ -34,7 +35,19 @@ class ReminderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::guest()){
+            return ("No.");
+        }
+        if (Auth::user()->id!=1){
+            trigger_error ("For some reason, there's more than one user. This should not have happened");
+        }
+        $request->validate([
+            'body'=>'required|max:280|unique:reminders',
+        ]);
+        $reminder = new Reminder;
+        $reminder->body = $request->body;
+        $reminder->save();
+        return back();
     }
 
     /**
