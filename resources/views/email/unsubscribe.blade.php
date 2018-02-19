@@ -5,4 +5,7 @@ We understand that mortality isn't for everyone.
     Unsubscribe here.
 </a>
 
+<br>
+<em>
 If you feel this email was an accident, please ignore it.
+</em>

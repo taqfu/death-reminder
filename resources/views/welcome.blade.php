@@ -11,7 +11,7 @@
                         <input class="form-control" type="text" placeholder="E-mail " name='email' />
 
                         <span class='input-group-btn'>
-                            <button class='btn btn-secondary'>Avoid Later <!-- Live Life --> </button>
+                            <button class='btn btn-secondary'>Be Mortal <!-- Live Life --> </button>
 
                         </span>
                     </div>
