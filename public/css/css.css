@@ -1,19 +1,26 @@
-#title, #title-2, .error-msg{
+.title, .title-2, .error-msg{
   font-family: 'Oswald', sans-serif;
 
 }
 .error-msg, .text{
   font-size:22px;
 }
-#title {
+.title {
   font-size:54px;
 
 }
-#title-2{
-  font-size:54px;
+.title:hover{
+    text-decoration:underline;
+    font-weight:bold;
+    cursor:pointer;
+}
+.title-2{
+  font-size:41px;
 }
 
-
+.hidden{
+    display:none;
+}
 #middle-container{
   position: fixed;
   top: 50%;

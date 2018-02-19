@@ -3,7 +3,7 @@
 @section('content')
 
 <div id='middle-container'>
-    <div id='title' class='text-center text-danger'>Error</div>
+    <div id='' class='title text-center text-danger'>Error</div>
     <div class='text-center text'>
         Registration disabled
     </div>
