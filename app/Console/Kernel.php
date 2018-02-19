@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Console;
-
+use \App\Subscription;
+use \App\Reminder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,10 +27,16 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
       $schedule->call(function () {
-          if (rand(0,1)){
-              
+          if (rand(1,90)==1){
+                $subscriptions = Subscription :: whereNull('unsubscribed_at')->whereNull('deleted_at')->get();
+                $reminder = Reminder::inRandomOrder()->first();
+                foreach ($subscriptions as $subscription){
+                      Mail::to($subscription->email)
+                        ->send(new \App\Mail\Reminder($subscription->email, $subscription->unsubscribe_key,
+                        $reminder->id, $reminder->body));
+                }
           }
-      })->everyMinute();
+      })->daily();
     }
 
     /**

@@ -10,15 +10,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class Reminder extends Mailable
 {
     use Queueable, SerializesModels;
-
+    protected $email;
+    protected $unsubscribe_key;
+    protected $id;
+    protected $body;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($email, $unsubscribe_key, $id, $body)
     {
-        //
+        $this->email = $email;
+        $this->unsubscribe_key = $unsubscribe_key;
+        $this->id = $id;
+        $this->body = $body;
     }
 
     /**
@@ -28,6 +34,11 @@ class Reminder extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+      return $this
+        ->subject('Death')->from('mementomori@death.taqfu.com',
+        'Memento Mori')->view('email.reminder')
+        ->with(['email'=>$this->email,
+        'unsubscribe_key'=>$this->unsubscribe_key, 'id'=>$this->id,
+        'body'=>$this->body]);
     }
 }
